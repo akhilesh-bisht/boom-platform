@@ -65,4 +65,6 @@ userSchema.methods.generateAccessToken = function () {
   );
 };
 
+// export
+
 export const User = model("User", userSchema);

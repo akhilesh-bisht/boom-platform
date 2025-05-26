@@ -1,4 +1,4 @@
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { uploadOnCloudinary } from "../utils/cloudnary.js";
 import { Video } from "../models/video.model.js";
 import { Purchase } from "../models/purchase.model.js";
 import { ApiError } from "../utils/ApiError.js";
@@ -31,6 +31,8 @@ export const uploadVideo = async (req, res) => {
     }
 
     const cloudResult = await uploadOnCloudinary(req.file.path);
+    console.log(cloudResult);
+
     if (!cloudResult?.secure_url) {
       throw new ApiError(500, "Cloudinary upload failed");
     }

@@ -7,7 +7,7 @@ const generateAccessTokens = async (userId) => {
     const user = await User.findById(userId);
     const accessToken = user.generateAccessToken();
 
-    return accessToken;
+    return { accessToken };
   } catch (error) {
     throw new ApiError(
       500,
@@ -89,6 +89,9 @@ export const loginUser = async (req, res) => {
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
   };
+
+  console.log("accentoken ", accessToken);
+
   // 8 - Send response
   return res
     .status(200)

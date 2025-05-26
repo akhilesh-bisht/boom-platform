@@ -26,6 +26,7 @@ const userSchema = new Schema(
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters long"],
     },
+
     walletBalance: {
       type: Number,
       default: 500,
@@ -40,6 +41,7 @@ const userSchema = new Schema(
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
+  console.log("registr pass", this.password);
 
   this.password = await bcrypt.hash(this.password, 10);
   next();
@@ -47,7 +49,11 @@ userSchema.pre("save", async function (next) {
 
 //   Compare password method
 userSchema.methods.isPasswordCorrect = async function (password) {
-  return await bcrypt.compare(password, this.password);
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    throw new Error("Error while comparing passwords");
+  }
 };
 
 // Generate access token

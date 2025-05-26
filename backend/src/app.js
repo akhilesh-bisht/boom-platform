@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
+import userRoute from "./routes/user.routes.js";
 
 const app = express();
 
@@ -11,6 +13,7 @@ app.use(
   })
 );
 
+app.use(bodyParser.json());
 // Parse incoming JSON with size limit
 app.use(
   express.json({
@@ -31,5 +34,9 @@ app.use(express.static("public"));
 
 // Parse cookies
 app.use(cookieParser());
+
+// routes declarations
+
+app.use("/api/v1/users", userRoute);
 
 export { app };
